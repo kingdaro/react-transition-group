@@ -240,12 +240,14 @@ class Transition extends React.Component {
 
     this.props.onEnter(node, appearing)
 
-    this.safeSetState({ status: ENTERING }, () => {
-      this.props.onEntering(node, appearing)
+    requestAnimationFrame(() => {
+      this.safeSetState({ status: ENTERING }, () => {
+        this.props.onEntering(node, appearing)
 
-      this.onTransitionEnd(node, enterTimeout, () => {
-        this.safeSetState({ status: ENTERED }, () => {
-          this.props.onEntered(node, appearing)
+        this.onTransitionEnd(node, enterTimeout, () => {
+          this.safeSetState({ status: ENTERED }, () => {
+            this.props.onEntered(node, appearing)
+          })
         })
       })
     })
